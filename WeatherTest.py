@@ -1,10 +1,10 @@
 import requests
-
+import sh
 import json
-
 import os
-
 import pickle
+import platform
+#导入所需要的库
 
 if not os.path.exists("first_time.pickle"):
     key = input("请输入和风天气key：")
@@ -13,15 +13,20 @@ if not os.path.exists("first_time.pickle"):
 else:
     with open("first_time.pickle", "rb") as f:
         key = pickle.load(f)
+#首次使用检查
 
 city = input("请输入你想查询的城市名称：")
+#用户输入地名
 
 url = "https://geoapi.qweather.com/v2/city/lookup"
+#和风天气查询接口
 
 querystring = {"location":city,"key":key}
+#访问前信息收集
 
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"}
+#用户请求头
 
 response = requests.request("GET", url, headers=headers, params=querystring)
 
@@ -30,6 +35,7 @@ if "location" in response.json():
 else:
     print("获取城市ID失败，请检查你的请求参数和API Key是否正确。")
     exit()
+#获取id，获取到了就保存，没有就报错
 
 url = "https://devapi.qweather.com/v7/weather/now"
 
@@ -69,9 +75,12 @@ print("风向360角度",wind360,"°")
 print("风向",wind_dir)
 print("风力等级",wind_scale)
 print("风速",wind_speed,"公里/小时")
-print("相对湿度",humidity,"％")
+print("相对湿度",humidity,"%")
 print("当前小时累计降水量",precip,"毫米")
 print("大气压强",pressure,"百帕")
 print("能见度",vis,"公里")
-print("云量",cloud,"％")
+print("云量",cloud,"%")
 print("露点湿度",dew)
+
+#懒得写了，应该都能看懂吧？
+#正在准备制作新的配合应用
