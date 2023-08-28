@@ -5,6 +5,7 @@ import json
 import os
 import pickle
 import requests
+import time
 # 导入所需要的库
 
 if not os.path.exists("first_time.pickle"):
@@ -84,3 +85,5 @@ print("云量", cloud, "%")
 print("露点湿度", dew)
 
 # 懒得写了，应该都能看懂吧？
+log_json = open('output_json.log', mode='a')
+log_json.write( time.time()+response.text+'\n' )
