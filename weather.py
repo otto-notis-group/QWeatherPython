@@ -6,6 +6,7 @@ import os
 import pickle
 import requests
 import time
+import logging
 # 导入所需要的库
 
 if not os.path.exists("first_time.pickle"):
@@ -34,8 +35,10 @@ response = requests.request("GET", URL, headers=headers, params=querystring,time
 
 if "location" in response.json():
     city_id = response.json()["location"][0]["id"]
+    logging.INFO('request ok')
 else:
     print("获取城市ID失败，请检查你的请求参数和API Key是否正确。")
+    logging.ERROR('APIKEYERROR')
     exit()
 # 获取id，获取到了就保存，没有就报错
 
@@ -87,3 +90,5 @@ print("露点湿度", dew)
 # 懒得写了，应该都能看懂吧？
 log_json = open('output_json.log', mode='a')
 log_json.write( time.time()+response.text+'\n' )
+log_output = open('weather.log', mode='a')
+log_json.write( time.time()+'link'+fx_link+'returncode'+code+'\n' )
