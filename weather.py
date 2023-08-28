@@ -87,8 +87,8 @@ print("能见度", vis, "公里")
 print("云量", cloud, "%")
 print("露点湿度", dew)
 
-# 懒得写了，应该都能看懂吧？
+#日志记录
 log_json = open('output_json.log', mode='a')
 log_json.write( time.time()+response.text+'\n' )
 log_output = open('weather.log', mode='a')
-log_json.write( time.time()+'link'+fx_link+'returncode'+code+'\n' )
+log_json.write( time.time()+'\n'+'link'+fx_link+'\n'+'returncode'+code+'\n' )
