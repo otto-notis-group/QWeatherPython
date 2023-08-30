@@ -7,6 +7,7 @@ import pickle
 import requests
 import time
 import logging
+import sys
 # 导入所需要的库
 
 if not os.path.exists("first_time.pickle"):
@@ -21,7 +22,7 @@ else:
 city = input("请输入你想查询的城市名称：")
 # 用户输入地名
 
-URL = "https://geoapi.qweather.com/v2/city/lookup"
+URL = "https://geoapi.qweather.com/v2/city/lookup?"
 # 和风天气查询接口
 
 querystring = {"location": city, "key": key}
@@ -35,7 +36,6 @@ response = requests.request("GET", URL, headers=headers, params=querystring,time
 
 if "location" in response.json():
     city_id = response.json()["location"][0]["id"]
-    logging.INFO('request ok')
 else:
     print("获取城市ID失败，请检查你的请求参数和API Key是否正确。")
     logging.ERROR('APIKEYERROR')
@@ -71,6 +71,28 @@ vis = now_data["vis"]
 cloud = now_data["cloud"]
 dew = now_data["dew"]
 
+#print结果输出
+
+# 以下为包装好的 Logger 类的定义
+class Logger(object):
+    def __init__(self, filename="Default.log"):
+        self.terminal = sys.stdout
+        self.log = open(filename, "w", encoding="utf-8")  # 防止编码错误
+
+    def write(self, message):
+        self.terminal.write(message)
+        self.log.write(message)
+
+    def flush(self):
+        pass
+
+import time  
+t = time.strftime("-%Y%m%d-%H%M%S", time.localtime())  # 时间戳
+filename = 'log' + t + '.txt'
+
+log = Logger(filename)  
+sys.stdout = log
+
 print("网页视图链接", fx_link)
 print("天气更新时间", obs_time)
 print("当前温度为", temp, "℃")
@@ -86,9 +108,3 @@ print("大气压强", pressure, "百帕")
 print("能见度", vis, "公里")
 print("云量", cloud, "%")
 print("露点湿度", dew)
-
-#日志记录
-log_json = open('output_json.log', mode='a')
-log_json.write( time.time()+response.text+'\n' )
-log_output = open('weather.log', mode='a')
-log_json.write( time.time()+'\n'+'link'+fx_link+'\n'+'returncode'+code+'\n' )
