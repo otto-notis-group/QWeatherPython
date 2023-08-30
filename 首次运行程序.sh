@@ -7,6 +7,6 @@ printf "如果您已经拥有Python或您成功安装了Python请继续"
 pause
 sudo pip install -r requirements.txt
 mv startbatinside 启动程序.command
-start 启动程序.comand
+start 启动程序.command
 rm 首次运行程序.bat
-rm 首次运行程序.comand
+rm 首次运行程序.command

@@ -9,7 +9,7 @@ import time
 import logging
 # 导入所需要的库
 
-if not os.path.exists("first_time.pickle") or pickle.load(f) = ("APIKEYERROR"):
+if not os.path.exists("first_time.pickle"):
     key = input("请输入和风天气key：")
     with open("first_time.pickle", "wb") as f:
         pickle.dump(key, f)
@@ -35,12 +35,10 @@ response = requests.request("GET", URL, headers=headers, params=querystring,time
 
 if "location" in response.json():
     city_id = response.json()["location"][0]["id"]
-    logging.info('request ok')
+    logging.INFO('request ok')
 else:
     print("获取城市ID失败，请检查你的请求参数和API Key是否正确。")
-    logging.error('APIKEYERROR')
-    
-    pickle.dump("APIKEYERROR", f)
+    logging.ERROR('APIKEYERROR')
     exit()
 # 获取id，获取到了就保存，没有就报错
 
