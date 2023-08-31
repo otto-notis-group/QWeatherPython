@@ -11,7 +11,7 @@ import sys
 import time
 # 导入所需要的库
 
-if not os.path.exists("first_time.pickle"):
+if not os.path.exists("first_time.bin"):
     key = input("请输入和风天气key：")
     with open("first_time.bin", "wb") as f:
         pickle.dump(key, f)
@@ -40,8 +40,7 @@ if "location" in response.json():
 else:
     print("获取城市ID失败，请检查你的请求参数和API Key是否正确。")
     logging.ERROR('APIKEYERROR')
-    with open("first_time.bin", "wb") as f:
-        pickle.dump("", f)
+    pickle.dump("", f)
     exit()
 # 获取id，获取到了就保存，没有就报错
 
