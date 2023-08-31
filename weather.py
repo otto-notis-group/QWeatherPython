@@ -39,6 +39,8 @@ if "location" in response.json():
 else:
     print("获取城市ID失败，请检查你的请求参数和API Key是否正确。")
     logging.ERROR('APIKEYERROR')
+    with open("first_time.pickle", "wb") as f:
+        pickle.dump("", f)
     exit()
 # 获取id，获取到了就保存，没有就报错
 
