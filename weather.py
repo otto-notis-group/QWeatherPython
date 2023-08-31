@@ -8,14 +8,15 @@ import requests
 import time
 import logging
 import sys
+import time
 # 导入所需要的库
 
 if not os.path.exists("first_time.pickle"):
     key = input("请输入和风天气key：")
-    with open("first_time.pickle", "wb") as f:
+    with open("first_time.bin", "wb") as f:
         pickle.dump(key, f)
 else:
-    with open("first_time.pickle", "rb") as f:
+    with open("first_time.bin", "rb") as f:
         key = pickle.load(f)
 # 首次使用检查
 
@@ -39,7 +40,7 @@ if "location" in response.json():
 else:
     print("获取城市ID失败，请检查你的请求参数和API Key是否正确。")
     logging.ERROR('APIKEYERROR')
-    with open("first_time.pickle", "wb") as f:
+    with open("first_time.bin", "wb") as f:
         pickle.dump("", f)
     exit()
 # 获取id，获取到了就保存，没有就报错
@@ -88,7 +89,6 @@ class Logger(object):
     def flush(self):
         pass
 
-import time  
 t = time.strftime("-%Y%m%d-%H%M%S", time.localtime())  # 时间戳
 filename = 'log' + t + '.txt'
 
